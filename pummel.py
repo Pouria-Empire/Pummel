@@ -189,7 +189,7 @@ def main():
     global proxies
     global multiple
     global mode
-    mode = str(input("Mode You Want To Choose (get/head):"))
+    mode = str(input("Mode You Want To Choose (get/post/head):"))
     if mode == "":
         mode = "get"
     else:
